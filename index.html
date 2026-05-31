@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hindi Language Translator</title>
+    <style>
+        :root {
+            --primary: #4a90e2;
+            --secondary: #f5f7fa;
+            --text-dark: #333;
+            --border: #ddd;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--secondary);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            width: 90%;
+            max-width: 850px;
+        }
+
+        h1 {
+            text-align: center;
+            color: var(--text-dark);
+            margin-bottom: 1.5rem;
+        }
+
+        .translation-grid {
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
+            gap: 20px;
+            align-items: start;
+        }
+
+        @media (max-width: 768px) {
+            .translation-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .select-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: #555;
+        }
+
+        select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            background-color: #fff;
+            font-size: 1rem;
+        }
+
+        textarea {
+            width: 100%;
+            height: 150px;
+            padding: 12px;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            resize: vertical;
+            font-size: 1rem;
+            box-sizing: border-box;
+        }
+
+        textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        .controls {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            padding-top: 30px;
+        }
+
+        button {
+            cursor: pointer;
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            background-color: var(--primary);
+            color: white;
+            font-size: 1.2rem;
+            transition: transform 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        button:hover {
+            transform: scale(1.1);
+            background-color: #357abd;
+        }
+
+        button:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+
+        .action-row {
+            margin-top: 15px;
+            display: flex;
+            gap: 10px;
+            justify-content: flex-end;
+        }
+
+        .btn-sm {
+            width: auto;
+            height: auto;
+            border-radius: 6px;
+            padding: 8px 15px;
+            font-size: 0.9rem;
+            background-color: #eef2f5;
+            color: var(--text-dark);
+            border: 1px solid var(--border);
+        }
+
+        .btn-sm:hover {
+            background-color: #dfe4e9;
+        }
+
+        .loader {
+            display: none;
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid var(--primary);
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>🌐 Universal Translator (हिंदी समर्थित)</h1>
+    
+    <div class="translation-grid">
+        
+        <!-- Left Side: Input -->
+        <div class="input-group">
+            <div class="select-group">
+                <label for="sourceLang">From Language (किस भाषा से?)</label>
+                <select id="sourceLang">
+                    <option value="auto">Auto Detect (स्वचालित)</option>
+                    <option value="en">English</option>
+                    <option value="hi" selected>Hindi (हिंदी)</option>
+                    <option value="es">Spanish (स्पेनिश)</option>
+                    <option value="fr">French (फ्रेंच)</option>
+                    <option value="de">German (जर्मन)</option>
+                    <option value="it">Italian (इटालियन)</option>
+                    <option value="pt">Portuguese (पुर्तगाली)</option>
+                    <option value="ru">Russian (रूसी)</option>
+                    <option value="zh">Chinese (चीनी)</option>
+                    <option value="ja">Japanese (जापानी)</option>
+                    <option value="ko">Korean (कोरियाई)</option>
+                    <option value="ar">Arabic (अरबी)</option>
+                    <option value="tr">Turkish (तुर्की)</option>
+                    <option value="pl">Polish (पोलिश)</option>
+                    <option value="nl">Dutch (डच)</option>
+                    <option value="sv">Swedish (स्वीडिश)</option>
+                    <option value="da">Danish (डेनिश)</option>
+                    <option value="fi">Finnish (फिनिश)</option>
+                    <option value="no">Norwegian (नॉर्वेजियन)</option>
+                    <option value="cs">Czech (चेक)</option>
+                    <option value="el">Greek (ग्रीक)</option>
+                    <option value="he">Hebrew (हीब्रू)</option>
+                    <option value="th">Thai (थाई)</option>
+                    <option value="vi">Vietnamese (वियतनामी)</option>
+                    <option value="id">Indonesian (इंडोनेशियाई)</option>
+                    <option value="ms">Malay (मलय)</option>
+                    <option value="uk">Ukrainian (यूक्रेनियन)</option>
+                    <option value="hu">Hungarian (हंगेरियन)</option>
+                    <option value="ro">Romanian (रोमानियन)</option>
+                    <option value="bg">Bulgarian (बल्गेरियन)</option>
+                    <option value="ta">Tamil (तमिल)</option>
+                    <option value="te">Telugu (तेलुगू)</option>
+                    <option value="bn">Bengali (बंगाली)</option>
+                    <option value="ur">Urdu (उर्दू)</option>
+                    <option value="gu">Gujarati (गुजराती)</option>
+                    <option value="kn">Kannada (कन्नड़)</option>
+                </select>
+            </div>
+            <textarea id="inputText" placeholder="Enter text to translate..."></textarea>
+        </div>
+
+        <!-- Middle: Controls -->
+        <div class="controls">
+            <div class="loader" id="loader"></div>
+            <button id="translateBtn" title="Translate">
+                ➔
+            </button>
+            <button id="swapBtn" class="btn-sm" style="width:40px; border-radius:50%;" title="Swap Languages">
+                ⇄
+            </button>
+        </div>
+
+        <!-- Right Side: Output -->
+        <div class="output-group">
+            <div class="select-group">
+                <label for="targetLang">To Language (किस भाषा में?)</label>
+                <select id="targetLang">
+                    <option value="hi" selected>Hindi (हिंदी)</option>
+                    <option value="en">English</option>
+                    <option value="es">Spanish (स्पेनिश)</option>
+                    <option value="fr">French (फ्रेंच)</option>
+                    <option value="de">German (जर्मन)</option>
+                    <option value="it">Italian (इटालियन)</option>
+                    <option value="pt">Portuguese (पुर्तगाली)</option>
+                    <option value="ru">Russian (रूसी)</option>
+                    <option value="zh">Chinese (चीनी)</option>
+                    <option value="ja">Japanese (जापानी)</option>
+                    <option value="ko">Korean (कोरियाई)</option>
+                    <option value="ar">Arabic (अरबी)</option>
+                    <option value="tr">Turkish (तुर्की)</option>
+                    <option value="pl">Polish (पोलिश)</option>
+                    <option value="nl">Dutch (डच)</option>
+                    <option value="sv">Swedish (स्वीडिश)</option>
+                    <option value="da">Danish (डेनिश)</option>
+                    <option value="fi">Finnish (फिनिश)</option>
+                    <option value="no">Norwegian (नॉर्वेजियन)</option>
+                    <option value="cs">Czech (चेक)</option>
+                    <option value="el">Greek (ग्रीक)</option>
+                    <option value="he">Hebrew (हीब्रू)</option>
+                    <option value="th">Thai (थाई)</option>
+                    <option value="vi">Vietnamese (वियतनामी)</option>
+                    <option value="id">Indonesian (इंडोनेशियाई)</option>
+                    <option value="ms">Malay (मलय)</option>
+                    <option value="uk">Ukrainian (यूक्रेनियन)</option>
+                    <option value="hu">Hungarian (हंगेरियन)</option>
+                    <option value="ro">Romanian (रोमानियन)</option>
+                    <option value="bg">Bulgarian (बल्गेरियन)</option>
+                    <option value="ta">Tamil (तमिल)</option>
+                    <option value="te">Telugu (तेलुगू)</option>
+                    <option value="bn">Bengali (बंगाली)</option>
+                    <option value="ur">Urdu (उर्दू)</option>
+                    <option value="gu">Gujarati (गुजराती)</option>
+                    <option value="kn">Kannada (कन्नड़)</option>
+                </select>
+            </div>
+            <textarea id="outputText" readonly placeholder="Translation will appear here..."></textarea>
+            
+            <div class="action-row">
+                <button class="btn-sm" id="copyBtn" title="Copy to Clipboard">📋 Copy</button>
+                <button class="btn-sm" id="speakBtn" title="Listen to Translation">🔊 Listen</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    const inputText = document.getElementById('inputText');
+    const outputText = document.getElementById('outputText');
+    const sourceLang = document.getElementById('sourceLang');
+    const targetLang = document.getElementById('targetLang');
+    const translateBtn = document.getElementById('translateBtn');
+    const loader = document.getElementById('loader');
+    const swapBtn = document.getElementById('swapBtn');
+    const copyBtn = document.getElementById('copyBtn');
+    const speakBtn = document.getElementById('speakBtn');
+
+    // Main Translation Logic
+    async function translateText() {
+        const text = inputText.value.trim();
+        let source = sourceLang.value;
+        const target = targetLang.value;
+
+        if (!text) {
+            alert("Please enter some text first.");
+            return;
+        }
+
+        // UI: Loading State
+        outputText.value = "Translating...";
+        translateBtn.disabled = true;
+        loader.style.display = "block";
+
+        try {
+            // MyMemory API - Free for demo
+            // Note: "auto" works best with English as target for this free API
+            const langPair = source === 'auto' ? 'en|' + target : source + '|' + target;
+            const url = `https://api.mymemory.translated.net/get?q=${encodeURIComponent(text)}&langpair=${langPair}`;
+
+            const response = await fetch(url);
+            const data = await response.json();
+
+            if(data.responseData && data.responseStatus === 200) {
+                outputText.value = data.responseData.translatedText;
+            } else {
+                outputText.value = "Error: Could not translate. Try a shorter sentence.";
+            }
+
+        } catch (error) {
+            console.error(error);
+            outputText.value = "Network Error. Please check your internet.";
+        } finally {
+            translateBtn.disabled = false;
+            loader.style.display = "none";
+        }
+    }
+
+    // Swap Languages
+    swapBtn.addEventListener('click', () => {
+        // Swap dropdown values
+        const tempLang = sourceLang.value;
+        sourceLang.value = targetLang.value;
+        targetLang.value = tempLang;
+
+        // Swap text content
+        const tempText = inputText.value;
+        inputText.value = outputText.value;
+        outputText.value = tempText;
+    });
+
+    // Copy to Clipboard
+    copyBtn.addEventListener('click', () => {
+        outputText.select();
+        navigator.clipboard.writeText(outputText.value).then(() => {
+            const originalText = copyBtn.innerText;
+            copyBtn.innerText = "✓ Copied";
+            setTimeout(() => copyBtn.innerText = originalText, 1500);
+        });
+    });
+
+    // Text to Speech (TTS)
+    speakBtn.addEventListener('click', () => {
+        if (!outputText.value) return;
+
+        window.speechSynthesis.cancel();
+
+        const utterance = new SpeechSynthesisUtterance(outputText.value);
+        
+        // Try to find voice for target language
+        const voices = window.speechSynthesis.getVoices();
+        const targetCode = targetLang.value.split('-')[0]; // e.g., 'hi' from 'hi'
+        
+        const selectedVoice = voices.find(voice => voice.lang.startsWith(targetCode));
+        if (selectedVoice) {
+            utterance.voice = selectedVoice;
+            utterance.lang = selectedVoice.lang;
+        }
+
+        window.speechSynthesis.speak(utterance);
+    });
+
+    // Event Listeners
+    translateBtn.addEventListener('click', translateText);
+    window.speechSynthesis.onvoiceschanged = () => window.speechSynthesis.getVoices();
+
+</script>
+
+</body>
+</html>
