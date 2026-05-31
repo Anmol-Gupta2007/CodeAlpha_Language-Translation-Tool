@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pro Translate Tool</title>
+    <title>Hindi Language Translator</title>
     <style>
         :root {
             --primary: #4a90e2;
@@ -28,7 +28,7 @@
             border-radius: 12px;
             box-shadow: 0 10px 25px rgba(0,0,0,0.1);
             width: 90%;
-            max-width: 800px;
+            max-width: 850px;
         }
 
         h1 {
@@ -79,7 +79,7 @@
             border-radius: 6px;
             resize: vertical;
             font-size: 1rem;
-            box-sizing: border-box; /* Ensures padding doesn't break width */
+            box-sizing: border-box;
         }
 
         textarea:focus {
@@ -162,25 +162,52 @@
 <body>
 
 <div class="container">
-    <h1>Language Translator</h1>
+    <h1>🌐 Universal Translator (हिंदी समर्थित)</h1>
     
     <div class="translation-grid">
         
         <!-- Left Side: Input -->
         <div class="input-group">
             <div class="select-group">
-                <label for="sourceLang">From Language</label>
+                <label for="sourceLang">From Language (किस भाषा से?)</label>
                 <select id="sourceLang">
+                    <option value="auto">Auto Detect (स्वचालित)</option>
                     <option value="en">English</option>
-                    <option value="es">Spanish</option>
-                    <option value="fr">French</option>
-                    <option value="de">German</option>
-                    <option value="it">Italian</option>
-                    <option value="pt">Portuguese</option>
-                    <option value="ru">Russian</option>
-                    <option value="zh">Chinese</option>
-                    <option value="ja">Japanese</option>
-                    <option value="auto">Auto Detect</option>
+                    <option value="hi" selected>Hindi (हिंदी)</option>
+                    <option value="es">Spanish (स्पेनिश)</option>
+                    <option value="fr">French (फ्रेंच)</option>
+                    <option value="de">German (जर्मन)</option>
+                    <option value="it">Italian (इटालियन)</option>
+                    <option value="pt">Portuguese (पुर्तगाली)</option>
+                    <option value="ru">Russian (रूसी)</option>
+                    <option value="zh">Chinese (चीनी)</option>
+                    <option value="ja">Japanese (जापानी)</option>
+                    <option value="ko">Korean (कोरियाई)</option>
+                    <option value="ar">Arabic (अरबी)</option>
+                    <option value="tr">Turkish (तुर्की)</option>
+                    <option value="pl">Polish (पोलिश)</option>
+                    <option value="nl">Dutch (डच)</option>
+                    <option value="sv">Swedish (स्वीडिश)</option>
+                    <option value="da">Danish (डेनिश)</option>
+                    <option value="fi">Finnish (फिनिश)</option>
+                    <option value="no">Norwegian (नॉर्वेजियन)</option>
+                    <option value="cs">Czech (चेक)</option>
+                    <option value="el">Greek (ग्रीक)</option>
+                    <option value="he">Hebrew (हीब्रू)</option>
+                    <option value="th">Thai (थाई)</option>
+                    <option value="vi">Vietnamese (वियतनामी)</option>
+                    <option value="id">Indonesian (इंडोनेशियाई)</option>
+                    <option value="ms">Malay (मलय)</option>
+                    <option value="uk">Ukrainian (यूक्रेनियन)</option>
+                    <option value="hu">Hungarian (हंगेरियन)</option>
+                    <option value="ro">Romanian (रोमानियन)</option>
+                    <option value="bg">Bulgarian (बल्गेरियन)</option>
+                    <option value="ta">Tamil (तमिल)</option>
+                    <option value="te">Telugu (तेलुगू)</option>
+                    <option value="bn">Bengali (बंगाली)</option>
+                    <option value="ur">Urdu (उर्दू)</option>
+                    <option value="gu">Gujarati (गुजराती)</option>
+                    <option value="kn">Kannada (कन्नड़)</option>
                 </select>
             </div>
             <textarea id="inputText" placeholder="Enter text to translate..."></textarea>
@@ -200,17 +227,44 @@
         <!-- Right Side: Output -->
         <div class="output-group">
             <div class="select-group">
-                <label for="targetLang">To Language</label>
+                <label for="targetLang">To Language (किस भाषा में?)</label>
                 <select id="targetLang">
-                    <option value="es" selected>Spanish</option>
+                    <option value="hi" selected>Hindi (हिंदी)</option>
                     <option value="en">English</option>
-                    <option value="fr">French</option>
-                    <option value="de">German</option>
-                    <option value="it">Italian</option>
-                    <option value="pt">Portuguese</option>
-                    <option value="ru">Russian</option>
-                    <option value="zh">Chinese</option>
-                    <option value="ja">Japanese</option>
+                    <option value="es">Spanish (स्पेनिश)</option>
+                    <option value="fr">French (फ्रेंच)</option>
+                    <option value="de">German (जर्मन)</option>
+                    <option value="it">Italian (इटालियन)</option>
+                    <option value="pt">Portuguese (पुर्तगाली)</option>
+                    <option value="ru">Russian (रूसी)</option>
+                    <option value="zh">Chinese (चीनी)</option>
+                    <option value="ja">Japanese (जापानी)</option>
+                    <option value="ko">Korean (कोरियाई)</option>
+                    <option value="ar">Arabic (अरबी)</option>
+                    <option value="tr">Turkish (तुर्की)</option>
+                    <option value="pl">Polish (पोलिश)</option>
+                    <option value="nl">Dutch (डच)</option>
+                    <option value="sv">Swedish (स्वीडिश)</option>
+                    <option value="da">Danish (डेनिश)</option>
+                    <option value="fi">Finnish (फिनिश)</option>
+                    <option value="no">Norwegian (नॉर्वेजियन)</option>
+                    <option value="cs">Czech (चेक)</option>
+                    <option value="el">Greek (ग्रीक)</option>
+                    <option value="he">Hebrew (हीब्रू)</option>
+                    <option value="th">Thai (थाई)</option>
+                    <option value="vi">Vietnamese (वियतनामी)</option>
+                    <option value="id">Indonesian (इंडोनेशियाई)</option>
+                    <option value="ms">Malay (मलय)</option>
+                    <option value="uk">Ukrainian (यूक्रेनियन)</option>
+                    <option value="hu">Hungarian (हंगेरियन)</option>
+                    <option value="ro">Romanian (रोमानियन)</option>
+                    <option value="bg">Bulgarian (बल्गेरियन)</option>
+                    <option value="ta">Tamil (तमिल)</option>
+                    <option value="te">Telugu (तेलुगू)</option>
+                    <option value="bn">Bengali (बंगाली)</option>
+                    <option value="ur">Urdu (उर्दू)</option>
+                    <option value="gu">Gujarati (गुजराती)</option>
+                    <option value="kn">Kannada (कन्नड़)</option>
                 </select>
             </div>
             <textarea id="outputText" readonly placeholder="Translation will appear here..."></textarea>
@@ -237,7 +291,7 @@
     // Main Translation Logic
     async function translateText() {
         const text = inputText.value.trim();
-        const source = sourceLang.value === 'auto' ? 'en' : sourceLang.value; // API fallback if auto not supported
+        let source = sourceLang.value;
         const target = targetLang.value;
 
         if (!text) {
@@ -245,43 +299,43 @@
             return;
         }
 
-        // UI State: Loading
+        // UI: Loading State
         outputText.value = "Translating...";
         translateBtn.disabled = true;
         loader.style.display = "block";
 
         try {
-            // Using MyMemory API (Free, no key required for small demos)
-            // Format: https://api.mymemory.translated.net/get?q=Hello World&langpair=en|es
+            // MyMemory API - Free for demo
+            // Note: "auto" works best with English as target for this free API
             const langPair = source === 'auto' ? 'en|' + target : source + '|' + target;
             const url = `https://api.mymemory.translated.net/get?q=${encodeURIComponent(text)}&langpair=${langPair}`;
 
             const response = await fetch(url);
             const data = await response.json();
 
-            if(data.responseData) {
+            if(data.responseData && data.responseStatus === 200) {
                 outputText.value = data.responseData.translatedText;
             } else {
-                outputText.value = "Error: Translation failed. Try a shorter sentence.";
+                outputText.value = "Error: Could not translate. Try a shorter sentence.";
             }
 
         } catch (error) {
             console.error(error);
             outputText.value = "Network Error. Please check your internet.";
         } finally {
-            // UI State: Done
             translateBtn.disabled = false;
             loader.style.display = "none";
         }
     }
 
-    // Swap Languages Function
+    // Swap Languages
     swapBtn.addEventListener('click', () => {
-        const temp = sourceLang.value;
+        // Swap dropdown values
+        const tempLang = sourceLang.value;
         sourceLang.value = targetLang.value;
-        targetLang.value = temp;
+        targetLang.value = tempLang;
 
-        // Also swap the text content
+        // Swap text content
         const tempText = inputText.value;
         inputText.value = outputText.value;
         outputText.value = tempText;
@@ -292,7 +346,7 @@
         outputText.select();
         navigator.clipboard.writeText(outputText.value).then(() => {
             const originalText = copyBtn.innerText;
-            copyBtn.innerText = "Copied!";
+            copyBtn.innerText = "✓ Copied";
             setTimeout(() => copyBtn.innerText = originalText, 1500);
         });
     });
@@ -301,28 +355,26 @@
     speakBtn.addEventListener('click', () => {
         if (!outputText.value) return;
 
-        // Cancel any current speech
         window.speechSynthesis.cancel();
 
         const utterance = new SpeechSynthesisUtterance(outputText.value);
         
-        // Try to find the voice for the target language
+        // Try to find voice for target language
         const voices = window.speechSynthesis.getVoices();
-        const selectedVoice = voices.find(voice => voice.lang.startsWith(targetLang.value));
+        const targetCode = targetLang.value.split('-')[0]; // e.g., 'hi' from 'hi'
+        
+        const selectedVoice = voices.find(voice => voice.lang.startsWith(targetCode));
         if (selectedVoice) {
             utterance.voice = selectedVoice;
+            utterance.lang = selectedVoice.lang;
         }
 
         window.speechSynthesis.speak(utterance);
     });
 
-    // Event Listener for Translate Button
+    // Event Listeners
     translateBtn.addEventListener('click', translateText);
-
-    // Load voices (browser dependent)
-    window.speechSynthesis.onvoiceschanged = () => {
-        window.speechSynthesis.getVoices();
-    };
+    window.speechSynthesis.onvoiceschanged = () => window.speechSynthesis.getVoices();
 
 </script>
 
