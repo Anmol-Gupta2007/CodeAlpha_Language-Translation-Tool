@@ -1,0 +1,112 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial, sans-serif;
+}
+
+body{
+    background:#f4f6f9;
+    display:flex;
+    justify-content:center;
+    align-items:flex-start;
+    min-height:100vh;
+    padding:20px;
+}
+
+.container{
+    width:100%;
+    max-width:900px;
+    background:#ffffff;
+    padding:30px;
+    border-radius:15px;
+    box-shadow:0 5px 20px rgba(0,0,0,0.15);
+}
+
+h1{
+    text-align:center;
+    margin-bottom:25px;
+    color:#222;
+    font-size:48px;
+}
+
+label{
+    display:block;
+    margin-bottom:8px;
+    margin-top:15px;
+    font-size:20px;
+    font-weight:bold;
+    color:#333;
+}
+
+select{
+    width:100%;
+    padding:14px;
+    border:1px solid #ccc;
+    border-radius:10px;
+    font-size:16px;
+}
+
+textarea{
+    width:100%;
+    height:180px;
+    padding:15px;
+    border:1px solid #ccc;
+    border-radius:10px;
+    resize:none;
+    font-size:18px;
+}
+
+button{
+    width:100%;
+    border:none;
+    border-radius:10px;
+    padding:15px;
+    font-size:20px;
+    cursor:pointer;
+    margin-top:15px;
+    color:white;
+}
+
+.translate-btn{
+    background:#4f7df0;
+}
+
+.translate-btn:hover{
+    background:#3666e0;
+}
+
+.copy-btn{
+    background:#5fa954;
+}
+
+.copy-btn:hover{
+    background:#4a8d41;
+}
+
+.speak-btn{
+    background:#e79a38;
+}
+
+.speak-btn:hover{
+    background:#d78822;
+}
+
+.output-section{
+    margin-top:20px;
+}
+
+@media(max-width:768px){
+
+    h1{
+        font-size:32px;
+    }
+
+    textarea{
+        height:140px;
+    }
+
+    button{
+        font-size:18px;
+    }
+}
