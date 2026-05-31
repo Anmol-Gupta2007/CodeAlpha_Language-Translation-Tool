@@ -1,311 +1,52 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Language Translation Tool</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Language Translation Tool</title>
 
-<style>
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family:Arial, sans-serif;
-}
-
-body{
-    background:#f4f6f9;
-    display:flex;
-    justify-content:center;
-    align-items:flex-start;
-    min-height:100vh;
-    padding:20px;
-}
-
-.container{
-    width:100%;
-    max-width:900px;
-    background:#ffffff;
-    padding:30px;
-    border-radius:15px;
-    box-shadow:0 5px 20px rgba(0,0,0,0.15);
-}
-
-h1{
-    text-align:center;
-    margin-bottom:25px;
-    color:#222;
-    font-size:48px;
-}
-
-label{
-    display:block;
-    margin-bottom:8px;
-    margin-top:15px;
-    font-size:20px;
-    font-weight:bold;
-    color:#333;
-}
-
-select{
-    width:100%;
-    padding:14px;
-    border:1px solid #ccc;
-    border-radius:10px;
-    font-size:16px;
-}
-
-textarea{
-    width:100%;
-    height:180px;
-    padding:15px;
-    border:1px solid #ccc;
-    border-radius:10px;
-    resize:none;
-    font-size:18px;
-}
-
-button{
-    width:100%;
-    border:none;
-    border-radius:10px;
-    padding:15px;
-    font-size:20px;
-    cursor:pointer;
-    margin-top:15px;
-    color:white;
-}
-
-.translate-btn{
-    background:#4f7df0;
-}
-
-.translate-btn:hover{
-    background:#3666e0;
-}
-
-.copy-btn{
-    background:#5fa954;
-}
-
-.copy-btn:hover{
-    background:#4a8d41;
-}
-
-.speak-btn{
-    background:#e79a38;
-}
-
-.speak-btn:hover{
-    background:#d78822;
-}
-
-.output-section{
-    margin-top:20px;
-}
-
-@media(max-width:768px){
-
-    h1{
-        font-size:32px;
-    }
-
-    textarea{
-        height:140px;
-    }
-
-    button{
-        font-size:18px;
-    }
-}
-</style>
+    <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
 
-<div class="container">
+    <div class="container">
 
-    <h1>🌐 Language Translation Tool</h1>
+        <h1>🌐 Language Translation Tool</h1>
 
-    <label for="sourceLang">Source Language</label>
-    <select id="sourceLang"></select>
+        <label for="sourceLang">Source Language</label>
+        <select id="sourceLang"></select>
 
-    <label for="inputText">Enter Text</label>
-    <textarea id="inputText"
-    placeholder="Type or paste your text here..."></textarea>
+        <label for="inputText">Enter Text</label>
+        <textarea id="inputText"
+        placeholder="Type or paste your text here..."></textarea>
 
-    <button class="translate-btn" onclick="translateText()">
-        🔄 Translate
-    </button>
-
-    <div class="output-section">
-
-        <label for="targetLang">Target Language</label>
-        <select id="targetLang"></select>
-
-        <label for="outputText">Translated Text</label>
-        <textarea id="outputText"
-        readonly
-        placeholder="Translated text will appear here..."></textarea>
-
-        <button class="copy-btn" onclick="copyText()">
-            📋 Copy Translation
+        <button class="translate-btn" onclick="translateText()">
+            🔄 Translate
         </button>
 
-        <button class="speak-btn" onclick="speakText()">
-            🔊 Text To Speech
-        </button>
+        <div class="output-section">
+
+            <label for="targetLang">Target Language</label>
+            <select id="targetLang"></select>
+
+            <label for="outputText">Translated Text</label>
+            <textarea id="outputText"
+            readonly
+            placeholder="Translated text will appear here..."></textarea>
+
+            <button class="copy-btn" onclick="copyText()">
+                📋 Copy Translation
+            </button>
+
+            <button class="speak-btn" onclick="speakText()">
+                🔊 Text To Speech
+            </button>
+
+        </div>
 
     </div>
 
-</div>
-
-<script>
-
-const languages = {
-    "auto":"Auto Detect",
-    "af":"Afrikaans",
-    "sq":"Albanian",
-    "ar":"Arabic",
-    "bn":"Bengali",
-    "bg":"Bulgarian",
-    "ca":"Catalan",
-    "zh-CN":"Chinese (Simplified)",
-    "zh-TW":"Chinese (Traditional)",
-    "hr":"Croatian",
-    "cs":"Czech",
-    "da":"Danish",
-    "nl":"Dutch",
-    "en":"English",
-    "et":"Estonian",
-    "fi":"Finnish",
-    "fr":"French",
-    "de":"German",
-    "el":"Greek",
-    "gu":"Gujarati",
-    "he":"Hebrew",
-    "hi":"Hindi",
-    "hu":"Hungarian",
-    "id":"Indonesian",
-    "it":"Italian",
-    "ja":"Japanese",
-    "kn":"Kannada",
-    "ko":"Korean",
-    "lv":"Latvian",
-    "lt":"Lithuanian",
-    "ms":"Malay",
-    "ml":"Malayalam",
-    "mr":"Marathi",
-    "ne":"Nepali",
-    "no":"Norwegian",
-    "fa":"Persian",
-    "pl":"Polish",
-    "pt":"Portuguese",
-    "pa":"Punjabi",
-    "ro":"Romanian",
-    "ru":"Russian",
-    "sr":"Serbian",
-    "sk":"Slovak",
-    "sl":"Slovenian",
-    "es":"Spanish",
-    "sw":"Swahili",
-    "sv":"Swedish",
-    "ta":"Tamil",
-    "te":"Telugu",
-    "th":"Thai",
-    "tr":"Turkish",
-    "uk":"Ukrainian",
-    "ur":"Urdu",
-    "vi":"Vietnamese",
-    "cy":"Welsh"
-};
-
-const sourceLang = document.getElementById("sourceLang");
-const targetLang = document.getElementById("targetLang");
-
-for(const code in languages){
-
-    let sourceOption = document.createElement("option");
-    sourceOption.value = code;
-    sourceOption.textContent = languages[code];
-    sourceLang.appendChild(sourceOption);
-
-    if(code !== "auto"){
-        let targetOption = document.createElement("option");
-        targetOption.value = code;
-        targetOption.textContent = languages[code];
-        targetLang.appendChild(targetOption);
-    }
-}
-
-sourceLang.value = "en";
-targetLang.value = "hi";
-
-async function translateText(){
-
-    const text = document.getElementById("inputText").value.trim();
-
-    if(text === ""){
-        alert("Please enter text.");
-        return;
-    }
-
-    const source = sourceLang.value;
-    const target = targetLang.value;
-
-    try{
-
-        const response = await fetch(
-        `https://translate.googleapis.com/translate_a/single?client=gtx&sl=${source}&tl=${target}&dt=t&q=${encodeURIComponent(text)}`
-        );
-
-        const data = await response.json();
-
-        let translatedText = "";
-
-        data[0].forEach(item=>{
-            translatedText += item[0];
-        });
-
-        document.getElementById("outputText").value = translatedText;
-
-    }
-    catch(error){
-        alert("Translation failed.");
-        console.error(error);
-    }
-}
-
-function copyText(){
-
-    const text = document.getElementById("outputText").value;
-
-    if(text === ""){
-        alert("Nothing to copy.");
-        return;
-    }
-
-    navigator.clipboard.writeText(text);
-    alert("Translation copied successfully!");
-}
-
-function speakText(){
-
-    const text = document.getElementById("outputText").value;
-
-    if(text === ""){
-        alert("No translated text available.");
-        return;
-    }
-
-    const speech = new SpeechSynthesisUtterance(text);
-    speech.lang = targetLang.value;
-
-    window.speechSynthesis.speak(speech);
-}
-
-</script>
+    <script src="script.js"></script>
 
 </body>
 </html>
-
