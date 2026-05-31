@@ -3,62 +3,60 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Advanced Language Translator</title>
+    <title>Professional Language Translator</title>
     <style>
         :root {
             --primary: #4a90e2;
+            --primary-dark: #357abd;
             --secondary: #f5f7fa;
             --text-dark: #333;
             --text-light: #666;
             --border: #ddd;
             --success: #28a745;
-            --error: #dc3545;
+            --white: #ffffff;
         }
 
         * {
             box-sizing: border-box;
+            margin: 0;
+            padding: 0;
         }
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            min-height: 100vh;
-            margin: 0;
             padding: 20px;
         }
 
         .container {
-            background: white;
-            padding: 2rem;
+            background: var(--white);
             border-radius: 16px;
             box-shadow: 0 20px 60px rgba(0,0,0,0.3);
             width: 100%;
-            max-width: 950px;
+            max-width: 1000px;
+            padding: 30px;
         }
 
         h1 {
             text-align: center;
             color: var(--text-dark);
-            margin: 0 0 1.5rem 0;
+            margin-bottom: 25px;
             font-size: 1.8rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
         }
 
-        .translation-wrapper {
+        .translation-grid {
             display: grid;
-            grid-template-columns: 1fr 80px 1fr;
+            grid-template-columns: 1fr 70px 1fr;
             gap: 20px;
-            align-items: stretch;
+            align-items: start;
         }
 
-        @media (max-width: 768px) {
-            .translation-wrapper {
+        @media (max-width: 800px) {
+            .translation-grid {
                 grid-template-columns: 1fr;
             }
         }
@@ -72,7 +70,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 10px;
+            margin-bottom: 12px;
         }
 
         label {
@@ -82,14 +80,14 @@
         }
 
         select {
-            padding: 10px 12px;
+            padding: 10px 15px;
             border: 2px solid var(--border);
             border-radius: 8px;
-            background: white;
+            background: var(--white);
             font-size: 0.95rem;
             color: var(--text-dark);
             cursor: pointer;
-            transition: border-color 0.3s;
+            min-width: 180px;
         }
 
         select:focus {
@@ -98,14 +96,14 @@
         }
 
         textarea {
-            flex: 1;
-            min-height: 200px;
+            width: 100%;
+            min-height: 220px;
             padding: 15px;
             border: 2px solid var(--border);
             border-radius: 10px;
             font-size: 1rem;
-            resize: none;
-            transition: border-color 0.3s;
+            font-family: inherit;
+            resize: vertical;
             line-height: 1.6;
         }
 
@@ -114,84 +112,72 @@
             border-color: var(--primary);
         }
 
-        textarea::placeholder {
-            color: #aaa;
-        }
-
-        .middle-controls {
+        .controls-column {
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             gap: 15px;
+            padding-top: 40px;
         }
 
-        .btn-translate {
+        .btn-main {
             width: 60px;
             height: 60px;
             border-radius: 50%;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             border: none;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
-            font-size: 1.5rem;
+            font-size: 1.4rem;
             cursor: pointer;
-            transition: transform 0.2s, box-shadow 0.2s;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            transition: all 0.3s;
             box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
         }
 
-        .btn-translate:hover {
+        .btn-main:hover {
             transform: scale(1.1);
-            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
         }
 
-        .btn-translate:disabled {
+        .btn-main:disabled {
             background: #ccc;
             cursor: not-allowed;
-            box-shadow: none;
+            transform: none;
         }
 
         .btn-swap {
             width: 40px;
             height: 40px;
             border-radius: 50%;
-            background: var(--secondary);
             border: 1px solid var(--border);
-            color: var(--text-dark);
+            background: var(--secondary);
             cursor: pointer;
-            transition: background 0.3s;
+            transition: all 0.3s;
         }
 
         .btn-swap:hover {
             background: #e0e0e0;
         }
 
-        .action-buttons {
-            margin-top: 15px;
+        .btn-small {
+            padding: 8px 14px;
+            border-radius: 6px;
+            border: 1px solid var(--border);
+            background: var(--secondary);
+            cursor: pointer;
+            font-size: 0.85rem;
+            transition: all 0.3s;
+        }
+
+        .btn-small:hover {
+            background: #e0e0e0;
+            border-color: var(--primary);
+        }
+
+        .action-row {
+            margin-top: 12px;
             display: flex;
             justify-content: flex-end;
             gap: 10px;
-        }
-
-        .btn-action {
-            padding: 10px 18px;
-            border-radius: 8px;
-            border: 1px solid var(--border);
-            background: white;
-            color: var(--text-dark);
-            font-size: 0.9rem;
-            cursor: pointer;
-            transition: all 0.3s;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-
-        .btn-action:hover {
-            background: var(--secondary);
-            border-color: var(--primary);
         }
 
         .loader {
@@ -209,30 +195,28 @@
             100% { transform: rotate(360deg); }
         }
 
-        .status-message {
+        .message {
             text-align: center;
-            padding: 10px;
+            padding: 12px;
             border-radius: 8px;
-            margin-bottom: 15px;
+            margin-bottom: 20px;
             display: none;
             font-size: 0.9rem;
         }
 
-        .status-message.error {
+        .message.error {
             display: block;
             background: #ffeaa7;
             color: #d63031;
-            border: 1px solid #fdcb6e;
         }
 
-        .status-message.success {
+        .message.success {
             display: block;
             background: #d4edda;
             color: #155724;
-            border: 1px solid #c3e6cb;
         }
 
-        .char-count {
+        .char-info {
             font-size: 0.8rem;
             color: #999;
             margin-top: 5px;
@@ -242,16 +226,16 @@
 <body>
 
 <div class="container">
-    <h1>🌐 Advanced Translator</h1>
+    <h1>🌐 Professional Language Translator</h1>
+    
+    <div class="message" id="message"></div>
 
-    <div class="status-message" id="statusMessage"></div>
-
-    <div class="translation-wrapper">
+    <div class="translation-grid">
         
-        <!-- Source Box -->
+        <!-- Left Box -->
         <div class="box">
             <div class="box-header">
-                <label for="sourceLang">From</label>
+                <label>From Language</label>
                 <select id="sourceLang">
                     <option value="auto">Auto Detect</option>
                     <option value="en" selected>English</option>
@@ -292,21 +276,21 @@
                     <option value="pa">Punjabi</option>
                 </select>
             </div>
-            <textarea id="inputText" placeholder="Type or paste your text here..."></textarea>
-            <div class="char-count" id="charCount">0 characters</div>
+            <textarea id="inputText" placeholder="Enter text here..."></textarea>
+            <div class="char-info" id="charCount">0 characters</div>
         </div>
 
         <!-- Middle Controls -->
-        <div class="middle-controls">
+        <div class="controls-column">
             <div class="loader" id="loader"></div>
-            <button class="btn-translate" id="translateBtn" title="Translate">➜</button>
-            <button class="btn-swap" id="swapBtn" title="Swap Languages">⇄</button>
+            <button class="btn-main" id="translateBtn">➜</button>
+            <button class="btn-swap" id="swapBtn" title="Swap">⇄</button>
         </div>
 
-        <!-- Target Box -->
+        <!-- Right Box -->
         <div class="box">
             <div class="box-header">
-                <label for="targetLang">To</label>
+                <label>To Language</label>
                 <select id="targetLang">
                     <option value="hi" selected>Hindi</option>
                     <option value="en">English</option>
@@ -347,16 +331,16 @@
                 </select>
             </div>
             <textarea id="outputText" readonly placeholder="Translation will appear here..."></textarea>
-            <div class="action-buttons">
-                <button class="btn-action" id="copyBtn">📋 Copy</button>
-                <button class="btn-action" id="speakBtn">🔊 Listen</button>
+            <div class="action-row">
+                <button class="btn-small" id="copyBtn">📋 Copy</button>
+                <button class="btn-small" id="speakBtn">🔊 Listen</button>
             </div>
         </div>
     </div>
 </div>
 
 <script>
-    // Elements
+    // DOM Elements
     const inputText = document.getElementById('inputText');
     const outputText = document.getElementById('outputText');
     const sourceLang = document.getElementById('sourceLang');
@@ -366,95 +350,67 @@
     const swapBtn = document.getElementById('swapBtn');
     const copyBtn = document.getElementById('copyBtn');
     const speakBtn = document.getElementById('speakBtn');
-    const statusMessage = document.getElementById('statusMessage');
+    const message = document.getElementById('message');
     const charCount = document.getElementById('charCount');
 
-    // API Configuration - Using LibreTranslate (More Accurate)
-    const API_URL = 'https://translate.terraprint.co/translate';
-    
-    // Fallback API if primary fails
-    const FALLBACK_API_URL = 'https://translate.argosopentech.com/translate';
-
-    // Character Counter
+    // Update character count
     inputText.addEventListener('input', () => {
-        charCount.textContent = `${inputText.value.length} characters`;
+        charCount.textContent = inputText.value.length + ' characters';
     });
 
-    // Show Status Message
-    function showStatus(message, type) {
-        statusMessage.textContent = message;
-        statusMessage.className = `status-message ${type}`;
-        statusMessage.style.display = 'block';
+    // Show message function
+    function showMessage(text, type) {
+        message.textContent = text;
+        message.className = 'message ' + type;
         setTimeout(() => {
-            statusMessage.style.display = 'none';
-        }, 5000);
+            message.style.display = 'none';
+        }, 4000);
     }
 
-    // Main Translation Function
-    async function translateText() {
+    // Translate Function using MyMemory API
+    async function translate() {
         const text = inputText.value.trim();
         let source = sourceLang.value;
         const target = targetLang.value;
 
         if (!text) {
-            showStatus('Please enter text to translate', 'error');
+            showMessage('Please enter some text to translate', 'error');
             return;
         }
 
-        // Hide previous status
-        statusMessage.style.display = 'none';
-        
-        // UI Loading State
-        outputText.value = '';
+        // Loading state
+        outputText.value = 'Translating...';
         translateBtn.disabled = true;
         loader.style.display = 'block';
+        message.style.display = 'none';
 
         try {
-            // Use primary API first
-            let response = await callAPI(API_URL, source, target, text);
-            
-            // If primary fails, try fallback
-            if (!response.ok) {
-                console.log('Primary API failed, trying fallback...');
-                response = await callAPI(FALLBACK_API_URL, source, target, text);
-            }
+            // For Auto Detect, we use 'en' as source for the API
+            let sourceCode = source === 'auto' ? 'en' : source;
+            let targetCode = target;
 
+            // MyMemory API URL
+            const url = `https://api.mymemory.translated.net/get?q=${encodeURIComponent(text)}&langpair=${sourceCode}|${targetCode}`;
+
+            const response = await fetch(url);
             const data = await response.json();
 
-            if (data.translated_text) {
-                outputText.value = data.translated_text;
-                showStatus('Translation successful!', 'success');
-            } else if (data.error) {
-                outputText.value = '';
-                showStatus(data.error, 'error');
+            if (data.responseStatus === 200 && data.responseData) {
+                outputText.value = data.responseData.translatedText;
+                showMessage('Translation successful!', 'success');
             } else {
-                throw new Error('Invalid response');
+                outputText.value = '';
+                showMessage('Translation failed. Please try again.', 'error');
             }
 
         } catch (error) {
             console.error(error);
             outputText.value = '';
-            showStatus('Translation failed. Please try again.', 'error');
+            showMessage('Network error. Please check your internet.', 'error');
         } finally {
             translateBtn.disabled = false;
             loader.style.display = 'none';
         }
-    }
-
-    // API Call Function
-    async function callAPI(url, source, target, text) {
-        return fetch(url, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                q: text,
-                source: source === 'auto' ? 'auto' : source,
-                target: target,
-                format: 'text'
-            })
-        });
     }
 
     // Swap Languages
@@ -467,14 +423,13 @@
         inputText.value = outputText.value;
         outputText.value = tempText;
 
-        showStatus('Languages swapped!', 'success');
+        showMessage('Languages swapped!', 'success');
     });
 
     // Copy to Clipboard
     copyBtn.addEventListener('click', () => {
         if (!outputText.value) return;
         
-        outputText.select();
         navigator.clipboard.writeText(outputText.value).then(() => {
             copyBtn.textContent = '✓ Copied';
             setTimeout(() => copyBtn.textContent = '📋 Copy', 1500);
@@ -489,12 +444,33 @@
 
         const utterance = new SpeechSynthesisUtterance(outputText.value);
         
-        // Find voice for target language
         const voices = window.speechSynthesis.getVoices();
         const targetCode = targetLang.value;
+        const voiceLang = targetCode.split('-')[0];
         
-        // Try to match voice
-        const selectedVoice = voices.find(voice => 
-            voice.lang.startsWith(targetCode) || 
-            voice.lang.startsWith(targetCode.split('-')[0])
-        );
+        const voice = voices.find(v => v.lang.startsWith(voiceLang));
+        if (voice) {
+            utterance.voice = voice;
+            utterance.lang = voice.lang;
+        }
+
+        window.speechSynthesis.speak(utterance);
+    });
+
+    // Event Listeners
+    translateBtn.addEventListener('click', translate);
+    
+    // Allow pressing Enter to translate (Ctrl+Enter)
+    inputText.addEventListener('keydown', (e) => {
+        if (e.ctrlKey && e.key === 'Enter') {
+            translate();
+        }
+    });
+
+    // Load voices
+    window.speechSynthesis.onvoiceschanged = () => {};
+
+</script>
+
+</body>
+</html>
