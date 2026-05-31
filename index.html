@@ -18,15 +18,15 @@ body{
     background:#f4f6f9;
     display:flex;
     justify-content:center;
-    align-items:center;
+    align-items:flex-start;
     min-height:100vh;
     padding:20px;
 }
 
 .container{
-    background:#fff;
-    width:900px;
-    max-width:100%;
+    width:100%;
+    max-width:900px;
+    background:#ffffff;
     padding:30px;
     border-radius:15px;
     box-shadow:0 5px 20px rgba(0,0,0,0.15);
@@ -41,9 +41,10 @@ h1{
 
 label{
     display:block;
-    font-size:18px;
-    font-weight:bold;
     margin-bottom:8px;
+    margin-top:15px;
+    font-size:20px;
+    font-weight:bold;
     color:#333;
 }
 
@@ -53,7 +54,6 @@ select{
     border:1px solid #ccc;
     border-radius:10px;
     font-size:16px;
-    margin-bottom:20px;
 }
 
 textarea{
@@ -64,7 +64,6 @@ textarea{
     border-radius:10px;
     resize:none;
     font-size:18px;
-    margin-bottom:20px;
 }
 
 button{
@@ -74,12 +73,12 @@ button{
     padding:15px;
     font-size:20px;
     cursor:pointer;
-    margin-top:10px;
+    margin-top:15px;
+    color:white;
 }
 
 .translate-btn{
     background:#4f7df0;
-    color:white;
 }
 
 .translate-btn:hover{
@@ -88,16 +87,14 @@ button{
 
 .copy-btn{
     background:#5fa954;
-    color:white;
 }
 
 .copy-btn:hover{
-    background:#4c9441;
+    background:#4a8d41;
 }
 
 .speak-btn{
     background:#e79a38;
-    color:white;
 }
 
 .speak-btn:hover{
@@ -105,7 +102,22 @@ button{
 }
 
 .output-section{
-    margin-top:25px;
+    margin-top:20px;
+}
+
+@media(max-width:768px){
+
+    h1{
+        font-size:32px;
+    }
+
+    textarea{
+        height:140px;
+    }
+
+    button{
+        font-size:18px;
+    }
 }
 </style>
 </head>
@@ -116,32 +128,26 @@ button{
 
     <h1>🌐 Language Translation Tool</h1>
 
-    <!-- Source Language -->
     <label for="sourceLang">Source Language</label>
     <select id="sourceLang"></select>
 
-    <!-- Input Text -->
     <label for="inputText">Enter Text</label>
     <textarea id="inputText"
-        placeholder="Type or paste your text here..."></textarea>
+    placeholder="Type or paste your text here..."></textarea>
 
-    <!-- Translate Button -->
     <button class="translate-btn" onclick="translateText()">
         🔄 Translate
     </button>
 
     <div class="output-section">
 
-        <!-- Target Language -->
         <label for="targetLang">Target Language</label>
         <select id="targetLang"></select>
 
-        <!-- Translated Text -->
         <label for="outputText">Translated Text</label>
         <textarea id="outputText"
-            readonly
-            placeholder="Translated text will appear here...">
-        </textarea>
+        readonly
+        placeholder="Translated text will appear here..."></textarea>
 
         <button class="copy-btn" onclick="copyText()">
             📋 Copy Translation
@@ -157,14 +163,11 @@ button{
 
 <script>
 
-// Languages List
 const languages = {
     "auto":"Auto Detect",
     "af":"Afrikaans",
     "sq":"Albanian",
     "ar":"Arabic",
-    "hy":"Armenian",
-    "az":"Azerbaijani",
     "bn":"Bengali",
     "bg":"Bulgarian",
     "ca":"Catalan",
@@ -221,7 +224,6 @@ const languages = {
 const sourceLang = document.getElementById("sourceLang");
 const targetLang = document.getElementById("targetLang");
 
-// Fill Dropdowns
 for(const code in languages){
 
     let sourceOption = document.createElement("option");
@@ -240,7 +242,6 @@ for(const code in languages){
 sourceLang.value = "en";
 targetLang.value = "hi";
 
-// Translate Function
 async function translateText(){
 
     const text = document.getElementById("inputText").value.trim();
@@ -256,28 +257,26 @@ async function translateText(){
     try{
 
         const response = await fetch(
-            `https://translate.googleapis.com/translate_a/single?client=gtx&sl=${source}&tl=${target}&dt=t&q=${encodeURIComponent(text)}`
+        `https://translate.googleapis.com/translate_a/single?client=gtx&sl=${source}&tl=${target}&dt=t&q=${encodeURIComponent(text)}`
         );
 
         const data = await response.json();
 
         let translatedText = "";
 
-        data[0].forEach(item => {
+        data[0].forEach(item=>{
             translatedText += item[0];
         });
 
         document.getElementById("outputText").value = translatedText;
 
-    }catch(error){
-
-        console.error(error);
+    }
+    catch(error){
         alert("Translation failed.");
-
+        console.error(error);
     }
 }
 
-// Copy Translation
 function copyText(){
 
     const text = document.getElementById("outputText").value;
@@ -288,11 +287,9 @@ function copyText(){
     }
 
     navigator.clipboard.writeText(text);
-
     alert("Translation copied successfully!");
 }
 
-// Text To Speech
 function speakText(){
 
     const text = document.getElementById("outputText").value;
